@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Shop | Browse Products</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Full Screen Loading Spinner -->
+  <div class="loader-overlay" id="loading-spinner">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Toast Notification Center -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar glass">
+    <div class="container nav-container">
+      <a href="/index.html" class="logo">
+        <i class="fa-solid fa-bolt"></i>
+        <span>E-Shop</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/shop.html" class="active">Shop</a>
+      </nav>
+
+      <div class="search-bar-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="global-search" placeholder="Search products..." autocomplete="off">
+        <div class="search-suggestions" id="search-suggestions-box"></div>
+      </div>
+
+      <div class="nav-icons">
+        <button id="theme-toggle" title="Toggle Light/Dark Mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <a href="/cart.html" id="cart-nav-btn" title="Shopping Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-icon-badge" id="cart-badge-count">0</span>
+        </a>
+
+        <a href="/profile.html" id="profile-nav-btn" class="hidden" title="User Profile">
+          <i class="fa-solid fa-circle-user"></i>
+        </a>
+
+        <a href="/admin.html" id="admin-nav-btn" class="hidden" title="Admin Dashboard">
+          <i class="fa-solid fa-screwdriver-wrench"></i>
+        </a>
+
+        <a href="/login.html" id="login-nav-btn" title="Sign In">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Shop Catalog Layout -->
+  <main class="container shop-layout">
+    <!-- Sidebar Filters -->
+    <aside class="shop-sidebar glass">
+      <!-- Search inside sidebar -->
+      <div class="filter-section">
+        <h3 class="filter-title">Search</h3>
+        <div class="form-group" style="margin-bottom: 0;">
+          <input type="text" id="sidebar-search" class="form-control" placeholder="Type name...">
+        </div>
+      </div>
+
+      <!-- Categories filter -->
+      <div class="filter-section">
+        <h3 class="filter-title">Category</h3>
+        <ul class="category-list" id="category-filter-list">
+          <li>
+            <button class="category-filter-btn active" data-category="All">
+              <span>All Products</span>
+            </button>
+          </li>
+          <li>
+            <button class="category-filter-btn" data-category="Electronics">
+              <span>Electronics</span>
+            </button>
+          </li>
+          <li>
+            <button class="category-filter-btn" data-category="Fashion">
+              <span>Fashion</span>
+            </button>
+          </li>
+          <li>
+            <button class="category-filter-btn" data-category="Home Decor">
+              <span>Home Decor</span>
+            </button>
+          </li>
+          <li>
+            <button class="category-filter-btn" data-category="Sports">
+              <span>Sports</span>
+            </button>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Price filter -->
+      <div class="filter-section">
+        <h3 class="filter-title">Price Limit</h3>
+        <div class="price-inputs">
+          <input type="number" id="min-price-input" placeholder="Min" value="0">
+          <span>to</span>
+          <input type="number" id="max-price-input" placeholder="Max" value="1200">
+        </div>
+        <input type="range" class="price-slider" id="price-range-slider" min="0" max="1200" step="10" value="1200">
+      </div>
+
+      <button id="clear-filters-btn" class="btn-secondary" style="width: 100%; justify-content: center; margin-top: 1rem;">
+        <i class="fa-solid fa-filter-circle-xmark"></i> Clear Filters
+      </button>
+    </aside>
+
+    <!-- Main Shop Products Section -->
+    <section class="shop-content-section">
+      <div class="shop-content-header">
+        <div class="results-count" id="results-count-text">Showing 0 products</div>
+        
+        <div class="sort-container">
+          <label for="sort-select" style="margin-right: 0.5rem; font-size: 0.9rem; color: var(--text-secondary);">Sort By:</label>
+          <select id="sort-select">
+            <option value="newest">Newest First</option>
+            <option value="priceAsc">Price: Low to High</option>
+            <option value="priceDesc">Price: High to Low</option>
+            <option value="ratingDesc">Highest Rated</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="products-grid" id="shop-products-grid">
+        <!-- Products load dynamically -->
+      </div>
+
+      <!-- Pagination Footer -->
+      <div class="pagination" id="shop-pagination">
+        <!-- Loaded dynamically -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 E-Shop Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/shop.js"></script>
+</body>
+</html>

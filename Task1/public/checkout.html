@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Shop | Checkout</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Full Screen Loading Spinner -->
+  <div class="loader-overlay" id="loading-spinner">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Toast Notification Center -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar glass">
+    <div class="container nav-container">
+      <a href="/index.html" class="logo">
+        <i class="fa-solid fa-bolt"></i>
+        <span>E-Shop</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/shop.html">Shop</a>
+      </nav>
+
+      <div class="search-bar-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="global-search" placeholder="Search products..." autocomplete="off">
+        <div class="search-suggestions" id="search-suggestions-box"></div>
+      </div>
+
+      <div class="nav-icons">
+        <button id="theme-toggle" title="Toggle Light/Dark Mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <a href="/cart.html" id="cart-nav-btn" class="active" title="Shopping Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-icon-badge" id="cart-badge-count">0</span>
+        </a>
+
+        <a href="/profile.html" id="profile-nav-btn" class="hidden" title="User Profile">
+          <i class="fa-solid fa-circle-user"></i>
+        </a>
+
+        <a href="/admin.html" id="admin-nav-btn" class="hidden" title="Admin Dashboard">
+          <i class="fa-solid fa-screwdriver-wrench"></i>
+        </a>
+
+        <a href="/login.html" id="login-nav-btn" title="Sign In">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Checkout View -->
+  <main class="container">
+    <h1 style="margin: 2rem 0 0.5rem; font-size: 2.2rem; font-weight: 800;">Secure Checkout</h1>
+    
+    <div class="checkout-layout">
+      <!-- Address & Payment Columns -->
+      <form id="checkout-form">
+        <div class="checkout-form-container glass">
+          <h2 class="checkout-section-title">Shipping Address</h2>
+          
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="ship-name">Full Name</label>
+              <input type="text" id="ship-name" class="form-control" placeholder="Recipient's Name" required>
+            </div>
+            
+            <div class="form-group">
+              <label for="ship-phone">Contact Phone</label>
+              <input type="tel" id="ship-phone" class="form-control" placeholder="+1 (555) 000-0000" required>
+            </div>
+
+            <div class="form-group full-width">
+              <label for="ship-street">Street Address</label>
+              <input type="text" id="ship-street" class="form-control" placeholder="123 Main St, Apt 4B" required>
+            </div>
+
+            <div class="form-group">
+              <label for="ship-city">City</label>
+              <input type="text" id="ship-city" class="form-control" placeholder="Springfield" required>
+            </div>
+
+            <div class="form-group">
+              <label for="ship-state">State / Province</label>
+              <input type="text" id="ship-state" class="form-control" placeholder="IL" required>
+            </div>
+
+            <div class="form-group">
+              <label for="ship-zip">Zip / Postal Code</label>
+              <input type="text" id="ship-zip" class="form-control" placeholder="62704" required>
+            </div>
+
+            <div class="form-group">
+              <label for="ship-country">Country</label>
+              <input type="text" id="ship-country" class="form-control" placeholder="United States" required>
+            </div>
+          </div>
+
+          <h2 class="checkout-section-title" style="margin-top: 3rem;">Payment Method</h2>
+          <div class="payment-options">
+            <label class="payment-option active" id="pay-cod-label">
+              <input type="radio" name="payment-method" id="pay-cod" value="Cash on Delivery" checked>
+              <div>
+                <strong>Cash on Delivery (COD)</strong>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">Pay in cash when your order is delivered to your doorstep.</p>
+              </div>
+            </label>
+
+            <label class="payment-option" id="pay-card-label">
+              <input type="radio" name="payment-method" id="pay-card" value="Card Payment">
+              <div>
+                <strong>Credit / Debit Card</strong>
+                <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">Pay securely using a Visa, Mastercard, or American Express card.</p>
+              </div>
+            </label>
+          </div>
+
+          <!-- Card Form (hidden by default, shown when card payment selected) -->
+          <div id="card-payment-form" style="display: none; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--glass-border);">
+            <div class="form-group">
+              <label for="card-number">Card Number</label>
+              <input type="text" id="card-number" class="form-control" placeholder="1234 5678 9101 1121">
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="card-expiry">Expiry Date</label>
+                <input type="text" id="card-expiry" class="form-control" placeholder="MM/YY">
+              </div>
+              <div class="form-group">
+                <label for="card-cvc">CVC Code</label>
+                <input type="password" id="card-cvc" class="form-control" placeholder="***" maxlength="4">
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- Order Summary Card -->
+      <div class="cart-summary glass" style="height: fit-content;">
+        <h2 class="summary-title" style="margin-bottom: 1rem;">Items Summary</h2>
+        
+        <div id="checkout-items-list" style="max-height: 250px; overflow-y: auto; margin-bottom: 1.5rem; padding-right: 0.5rem;">
+          <!-- Loaded dynamically via JS -->
+        </div>
+
+        <div class="summary-row" style="margin-top: 1.5rem; border-top: 1px solid var(--glass-border); padding-top: 1rem;">
+          <span>Subtotal</span>
+          <span id="checkout-subtotal">₹0.00</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Taxes (8%)</span>
+          <span id="checkout-tax">₹0.00</span>
+        </div>
+
+        <div class="summary-row">
+          <span>Shipping Charges</span>
+          <span id="checkout-shipping">Free</span>
+        </div>
+
+        <div class="summary-row" id="checkout-coupon-row" style="display: none; color: var(--success); font-weight: 600;">
+          <span>Promo Discount</span>
+          <span id="checkout-discount-amount">-₹0.00</span>
+        </div>
+
+        <div class="summary-row total">
+          <span>Total Payable</span>
+          <span id="checkout-total">₹0.00</span>
+        </div>
+
+        <button type="submit" form="checkout-form" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem; padding: 1rem;">
+          Complete Purchase <i class="fa-solid fa-lock"></i>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 E-Shop Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/checkout.js"></script>
+</body>
+</html>

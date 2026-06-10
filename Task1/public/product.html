@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Shop | Product Details</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Full Screen Loading Spinner -->
+  <div class="loader-overlay" id="loading-spinner">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Toast Notification Center -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar glass">
+    <div class="container nav-container">
+      <a href="/index.html" class="logo">
+        <i class="fa-solid fa-bolt"></i>
+        <span>E-Shop</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/shop.html">Shop</a>
+      </nav>
+
+      <div class="search-bar-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="global-search" placeholder="Search products..." autocomplete="off">
+        <div class="search-suggestions" id="search-suggestions-box"></div>
+      </div>
+
+      <div class="nav-icons">
+        <button id="theme-toggle" title="Toggle Light/Dark Mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <a href="/cart.html" id="cart-nav-btn" title="Shopping Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-icon-badge" id="cart-badge-count">0</span>
+        </a>
+
+        <a href="/profile.html" id="profile-nav-btn" class="hidden" title="User Profile">
+          <i class="fa-solid fa-circle-user"></i>
+        </a>
+
+        <a href="/admin.html" id="admin-nav-btn" class="hidden" title="Admin Dashboard">
+          <i class="fa-solid fa-screwdriver-wrench"></i>
+        </a>
+
+        <a href="/login.html" id="login-nav-btn" title="Sign In">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Product Detail Section -->
+  <main class="container">
+    <div class="product-detail-grid" id="product-details-container">
+      <!-- Loaded dynamically via JS -->
+      <!-- Fallback Skeleton -->
+      <div style="text-align: center; grid-column: span 2; padding: 5rem 0; color: var(--text-muted);">
+        <i class="fa-solid fa-spinner fa-spin" style="font-size: 2.5rem; margin-bottom: 1rem;"></i>
+        <p>Loading product details...</p>
+      </div>
+    </div>
+
+    <!-- Product Tabbed Sections -->
+    <div class="product-tabs">
+      <div class="tabs-header">
+        <button class="tab-btn active" data-tab="tab-desc">Description</button>
+        <button class="tab-btn" data-tab="tab-specs">Specifications</button>
+        <button class="tab-btn" data-tab="tab-reviews" id="tab-reviews-count-btn">Reviews (0)</button>
+      </div>
+
+      <!-- Description tab -->
+      <div class="tab-content active" id="tab-desc">
+        <p id="product-tab-description" style="line-height: 1.8; color: var(--text-secondary);">
+          <!-- Dynamically filled -->
+        </p>
+      </div>
+
+      <!-- Specs tab (static specifications populated dynamically with default fallback) -->
+      <div class="tab-content" id="tab-specs">
+        <div class="table-container">
+          <table class="order-table">
+            <thead>
+              <tr>
+                <th>Specification</th>
+                <th>Detail</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Manufacturer</strong></td>
+                <td>E-Shop Premium Goods</td>
+              </tr>
+              <tr>
+                <td><strong>Warranty</strong></td>
+                <td>12 Months Manufacturer Warranty</td>
+              </tr>
+              <tr>
+                <td><strong>Eco-Friendly</strong></td>
+                <td>Yes, Recycled Packaging Materials</td>
+              </tr>
+              <tr>
+                <td><strong>Shipping Class</strong></td>
+                <td>Standard Fragile Insured</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Reviews tab -->
+      <div class="tab-content" id="tab-reviews">
+        <div class="reviews-list" id="reviews-list-container">
+          <!-- Dynamically filled -->
+        </div>
+
+        <!-- Add Review Form (only displayed for logged in users) -->
+        <div id="add-review-section">
+          <!-- Populated by JS: Form for users or prompt for guests -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Products -->
+    <section class="products-section" style="padding-bottom: 0;">
+      <h2 class="section-title" style="text-align: left; margin-bottom: 2rem;">Related Products</h2>
+      <div class="products-grid" id="related-products-container">
+        <!-- Loaded dynamically -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 E-Shop Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/product.js"></script>
+</body>
+</html>

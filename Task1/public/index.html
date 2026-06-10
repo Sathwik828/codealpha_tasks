@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Shop | Modern Full-Stack E-Commerce</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Full Screen Loading Spinner -->
+  <div class="loader-overlay" id="loading-spinner">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Toast Notification Center -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar glass">
+    <div class="container nav-container">
+      <a href="/index.html" class="logo">
+        <i class="fa-solid fa-bolt"></i>
+        <span>E-Shop</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="/index.html" class="active">Home</a>
+        <a href="/shop.html">Shop</a>
+      </nav>
+
+      <div class="search-bar-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="global-search" placeholder="Search products..." autocomplete="off">
+        <div class="search-suggestions" id="search-suggestions-box"></div>
+      </div>
+
+      <div class="nav-icons">
+        <!-- Theme Toggle -->
+        <button id="theme-toggle" title="Toggle Light/Dark Mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <!-- Cart Icon -->
+        <a href="/cart.html" id="cart-nav-btn" title="Shopping Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-icon-badge" id="cart-badge-count">0</span>
+        </a>
+
+        <!-- User Profile Dashboard Icon (Hidden for guests, loaded via JS) -->
+        <a href="/profile.html" id="profile-nav-btn" class="hidden" title="User Profile">
+          <i class="fa-solid fa-circle-user"></i>
+        </a>
+
+        <!-- Admin Dashboard Icon (Only for admin roles) -->
+        <a href="/admin.html" id="admin-nav-btn" class="hidden" title="Admin Dashboard">
+          <i class="fa-solid fa-screwdriver-wrench"></i>
+        </a>
+
+        <!-- Auth Actions (Shown for guests) -->
+        <a href="/login.html" id="login-nav-btn" title="Sign In">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-text">
+        <h1>Experience the Future of <span class="gradient-text">Shopping</span></h1>
+        <p>Discover a curated collection of cutting-edge electronics, designer fashionwear, minimalist home decor, and professional fitness accessories. Free delivery on orders over ₹4000.</p>
+        <div class="hero-buttons">
+          <a href="/shop.html" class="btn-primary">Shop Catalog <i class="fa-solid fa-arrow-right"></i></a>
+          <a href="/shop.html?category=Electronics" class="btn-secondary">View Tech Specials</a>
+        </div>
+      </div>
+      <div class="hero-image">
+        <div class="hero-bg-glow"></div>
+        <div class="hero-image-container">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800" alt="Featured headphones">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Categories Section -->
+  <section class="categories-section">
+    <div class="container">
+      <h2 class="section-title">Shop by Category</h2>
+      <p class="section-subtitle">Find exactly what you're looking for with our curated collections</p>
+      
+      <div class="categories-grid" id="categories-container">
+        <!-- Categories loaded dynamically, or fallback defaults -->
+        <div class="category-card glass" onclick="window.location.href='/shop.html?category=Electronics'">
+          <i class="fa-solid fa-laptop"></i>
+          <h3>Electronics</h3>
+        </div>
+        <div class="category-card glass" onclick="window.location.href='/shop.html?category=Fashion'">
+          <i class="fa-solid fa-shirt"></i>
+          <h3>Fashion</h3>
+        </div>
+        <div class="category-card glass" onclick="window.location.href='/shop.html?category=Home Decor'">
+          <i class="fa-solid fa-couch"></i>
+          <h3>Home Decor</h3>
+        </div>
+        <div class="category-card glass" onclick="window.location.href='/shop.html?category=Sports'">
+          <i class="fa-solid fa-dumbbell"></i>
+          <h3>Sports</h3>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="products-section">
+    <div class="container">
+      <h2 class="section-title">Featured Products</h2>
+      <p class="section-subtitle">Explore our highly rated and trending items</p>
+      
+      <div class="products-grid" id="featured-products-container">
+        <!-- Products will load dynamically via JS -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="/index.html" class="logo" style="margin-bottom: 1.5rem;">
+            <i class="fa-solid fa-bolt"></i>
+            <span>E-Shop</span>
+          </a>
+          <p>A modern e-commerce application powered by vanilla Javascript, Express, and MongoDB. Experience lightning-fast transactions and state-of-the-art responsiveness.</p>
+          <div class="footer-socials">
+            <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-github"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="/index.html">Home</a></li>
+            <li><a href="/shop.html">Shop Catalog</a></li>
+            <li><a href="/cart.html">View Cart</a></li>
+            <li><a href="/profile.html">My Account</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Customer Support</h3>
+          <ul class="footer-links">
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Shipping Details</a></li>
+            <li><a href="#">Returns & Refunds</a></li>
+            <li><a href="#">Privacy Policy</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Contact Info</h3>
+          <p><i class="fa-solid fa-envelope" style="margin-right: 0.5rem;"></i> support@eshop.com</p>
+          <p><i class="fa-solid fa-phone" style="margin-right: 0.5rem;"></i> +1 (800) 555-0199</p>
+          <p><i class="fa-solid fa-location-dot" style="margin-right: 0.5rem;"></i> 100 Infinite Loop, Cupertino, CA</p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 E-Shop Inc. All rights reserved. Designed with passion.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Script Files -->
+  <script src="/js/api.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    // Load featured products on home page load
+    document.addEventListener('DOMContentLoaded', async () => {
+      showLoader(true);
+      try {
+        const data = await API.get('/products?limit=4&sort=ratingDesc');
+        if (data.success && data.products) {
+          const container = document.getElementById('featured-products-container');
+          container.innerHTML = '';
+          data.products.forEach(product => {
+            container.appendChild(createProductCard(product));
+          });
+        }
+      } catch (err) {
+        console.error(err);
+        showToast('Error loading featured products', 'error');
+      } finally {
+        showLoader(false);
+      }
+    });
+  </script>
+</body>
+</html>

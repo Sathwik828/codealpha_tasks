@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Shop | Order Success</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar glass">
+    <div class="container nav-container">
+      <a href="/index.html" class="logo">
+        <i class="fa-solid fa-bolt"></i>
+        <span>E-Shop</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/shop.html">Shop</a>
+      </nav>
+
+      <div class="search-bar-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="global-search" placeholder="Search products..." autocomplete="off">
+        <div class="search-suggestions" id="search-suggestions-box"></div>
+      </div>
+
+      <div class="nav-icons">
+        <button id="theme-toggle" title="Toggle Light/Dark Mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <a href="/cart.html" id="cart-nav-btn" title="Shopping Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-icon-badge" id="cart-badge-count">0</span>
+        </a>
+
+        <a href="/profile.html" id="profile-nav-btn" class="hidden" title="User Profile">
+          <i class="fa-solid fa-circle-user"></i>
+        </a>
+
+        <a href="/admin.html" id="admin-nav-btn" class="hidden" title="Admin Dashboard">
+          <i class="fa-solid fa-screwdriver-wrench"></i>
+        </a>
+
+        <a href="/login.html" id="login-nav-btn" title="Sign In">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Confirmation details -->
+  <main class="container" style="text-align: center; padding: 6rem 0;">
+    <div class="glass" style="max-width: 600px; margin: 0 auto; padding: 4rem 3rem; border-radius: var(--border-radius-lg);">
+      <div style="width: 80px; height: 80px; border-radius: 50%; background-color: rgba(16,185,129,0.1); color: var(--success); display: flex; align-items: center; justify-content: center; font-size: 2.5rem; margin: 0 auto 2rem;">
+        <i class="fa-solid fa-circle-check"></i>
+      </div>
+
+      <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 1rem;">Order Placed!</h1>
+      <p style="color: var(--text-secondary); line-height: 1.6; margin-bottom: 2.5rem;">Thank you for shopping with us. Your transaction was processed successfully. A confirmation email has been dispatched to your mailbox.</p>
+      
+      <div style="background-color: var(--bg-tertiary); border-radius: var(--border-radius-sm); padding: 1.5rem; margin-bottom: 3rem; display: flex; justify-content: space-between; align-items: center;">
+        <span style="color: var(--text-secondary); font-weight: 600;">Order Reference Code</span>
+        <strong id="confirm-order-code" style="font-size: 1.1rem; color: var(--primary);">ORD-XXXXXX</strong>
+      </div>
+
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a id="btn-view-tracker" href="/profile.html" class="btn-primary">Track Order Status <i class="fa-solid fa-truck"></i></a>
+        <a href="/shop.html" class="btn-secondary">Continue Shopping</a>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 E-Shop Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const orderCode = urlParams.get('code');
+      const orderId = urlParams.get('id');
+
+      if (orderCode) {
+        document.getElementById('confirm-order-code').textContent = orderCode;
+      }
+      if (orderId) {
+        document.getElementById('btn-view-tracker').href = `/profile.html?track=${orderId}`;
+      }
+    });
+  </script>
+</body>
+</html>

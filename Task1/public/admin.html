@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Shop | Admin Panel</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Full Screen Loading Spinner -->
+  <div class="loader-overlay" id="loading-spinner">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Toast Notification Center -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar glass">
+    <div class="container nav-container">
+      <a href="/index.html" class="logo">
+        <i class="fa-solid fa-bolt"></i>
+        <span>E-Shop</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/shop.html">Shop</a>
+      </nav>
+
+      <div class="search-bar-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="global-search" placeholder="Search products..." autocomplete="off">
+        <div class="search-suggestions" id="search-suggestions-box"></div>
+      </div>
+
+      <div class="nav-icons">
+        <button id="theme-toggle" title="Toggle Light/Dark Mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <a href="/cart.html" id="cart-nav-btn" title="Shopping Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-icon-badge" id="cart-badge-count">0</span>
+        </a>
+
+        <a href="/profile.html" id="profile-nav-btn" title="User Profile">
+          <i class="fa-solid fa-circle-user"></i>
+        </a>
+
+        <a href="/admin.html" id="admin-nav-btn" class="active" title="Admin Dashboard">
+          <i class="fa-solid fa-screwdriver-wrench"></i>
+        </a>
+
+        <a href="/login.html" id="login-nav-btn" class="hidden" title="Sign In">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Admin Dashboard Layout -->
+  <main class="container dashboard-layout">
+    <!-- Left Navigation -->
+    <aside class="dashboard-nav glass">
+      <div style="text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border);">
+        <i class="fa-solid fa-user-shield" style="font-size: 3.5rem; color: var(--secondary); margin-bottom: 0.8rem;"></i>
+        <h3>Admin Console</h3>
+        <p style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; margin-top: 0.2rem;">Store Manager</p>
+      </div>
+
+      <div class="dash-nav-link active" id="btn-show-overview">
+        <i class="fa-solid fa-chart-line"></i> Dashboard Overview
+      </div>
+      <div class="dash-nav-link" id="btn-show-manage-products">
+        <i class="fa-solid fa-boxes-stacked"></i> Manage Products
+      </div>
+      <div class="dash-nav-link" id="btn-show-manage-orders">
+        <i class="fa-solid fa-truck-ramp-box"></i> Manage Orders
+      </div>
+    </aside>
+
+    <!-- Right Panels -->
+    <section class="dashboard-panels">
+      <!-- PANEL 1: Overview Analytics -->
+      <div class="dashboard-panel glass" id="panel-overview">
+        <h2>Dashboard Analytics</h2>
+        
+        <div class="admin-analytics-grid">
+          <!-- Total Revenue Card -->
+          <div class="analytics-card glass">
+            <div class="analytics-icon"><i class="fa-solid fa-wallet"></i></div>
+            <div class="analytics-info">
+              <h4>Total Sales</h4>
+              <span id="sales-stat-revenue">₹0.00</span>
+            </div>
+          </div>
+          <!-- Order Count Card -->
+          <div class="analytics-card glass">
+            <div class="analytics-icon" style="color: var(--secondary); background-color: rgba(236,72,153,0.1);"><i class="fa-solid fa-receipt"></i></div>
+            <div class="analytics-info">
+              <h4>Total Orders</h4>
+              <span id="sales-stat-orders">0</span>
+            </div>
+          </div>
+          <!-- Product Count Card -->
+          <div class="analytics-card glass">
+            <div class="analytics-icon" style="color: var(--success); background-color: rgba(16,185,129,0.1);"><i class="fa-solid fa-box-open"></i></div>
+            <div class="analytics-info">
+              <h4>Products</h4>
+              <span id="sales-stat-products">0</span>
+            </div>
+          </div>
+          <!-- User Count Card -->
+          <div class="analytics-card glass">
+            <div class="analytics-icon" style="color: #3b82f6; background-color: rgba(59,130,246,0.1);"><i class="fa-solid fa-users"></i></div>
+            <div class="analytics-info">
+              <h4>Total Users</h4>
+              <span id="sales-stat-users">0</span>
+            </div>
+          </div>
+        </div>
+
+        <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">Recent Orders Preview</h3>
+        <div class="table-container">
+          <table class="order-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer Name</th>
+                <th>Total Value</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="overview-recent-orders">
+              <!-- Loaded dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PANEL 2: Manage Products (CRUD) -->
+      <div class="dashboard-panel glass hidden" id="panel-manage-products">
+        <div class="admin-actions-header">
+          <h2>Product Inventory</h2>
+          <button class="btn-primary" id="btn-create-product-modal">
+            <i class="fa-solid fa-plus"></i> Add New Product
+          </button>
+        </div>
+
+        <div class="table-container">
+          <table class="order-table">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Stock</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-products-tbody">
+              <!-- Loaded dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- PANEL 3: Manage Orders (Fulfillment) -->
+      <div class="dashboard-panel glass hidden" id="panel-manage-orders">
+        <h2>Order Processing & Shipment</h2>
+        <div class="table-container">
+          <table class="order-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Date</th>
+                <th>Total Paid</th>
+                <th>Order Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-orders-tbody">
+              <!-- Loaded dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- MODAL DIALOG: Product Add / Edit -->
+  <div class="modal-backdrop" id="product-modal">
+    <div class="modal-content glass">
+      <button class="close-modal-btn" id="btn-close-modal"><i class="fa-solid fa-xmark"></i></button>
+      <h2 id="modal-title" style="margin-bottom: 1.5rem; font-size: 1.5rem; font-weight: 800;">Add Product</h2>
+      
+      <form id="product-crud-form">
+        <!-- Hidden Input to store product ID when editing -->
+        <input type="hidden" id="crud-product-id">
+
+        <div class="form-group">
+          <label for="crud-title">Product Title</label>
+          <input type="text" id="crud-title" class="form-control" required>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="crud-category">Category</label>
+            <select id="crud-category" class="form-control" required>
+              <option value="Electronics">Electronics</option>
+              <option value="Fashion">Fashion</option>
+              <option value="Home Decor">Home Decor</option>
+              <option value="Sports">Sports</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="crud-price">Unit Price (₹)</label>
+            <input type="number" id="crud-price" class="form-control" step="0.01" min="0" required>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="crud-stock">Stock Quantity</label>
+            <input type="number" id="crud-stock" class="form-control" min="0" required>
+          </div>
+          <div class="form-group">
+            <label for="crud-image">Image URL</label>
+            <input type="url" id="crud-image" class="form-control" placeholder="https://unsplash.com/..." required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="crud-desc">Product Description</label>
+          <textarea id="crud-desc" class="form-control" rows="4" required placeholder="Describe details..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; margin-top: 1.5rem;">
+          Save Product Details <i class="fa-solid fa-check"></i>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 E-Shop Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/admin.js"></script>
+</body>
+</html>

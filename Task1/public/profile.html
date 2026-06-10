@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Shop | My Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <!-- Full Screen Loading Spinner -->
+  <div class="loader-overlay" id="loading-spinner">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Toast Notification Center -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Navigation Bar -->
+  <header class="navbar glass">
+    <div class="container nav-container">
+      <a href="/index.html" class="logo">
+        <i class="fa-solid fa-bolt"></i>
+        <span>E-Shop</span>
+      </a>
+
+      <nav class="nav-links">
+        <a href="/index.html">Home</a>
+        <a href="/shop.html">Shop</a>
+      </nav>
+
+      <div class="search-bar-container">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="text" id="global-search" placeholder="Search products..." autocomplete="off">
+        <div class="search-suggestions" id="search-suggestions-box"></div>
+      </div>
+
+      <div class="nav-icons">
+        <button id="theme-toggle" title="Toggle Light/Dark Mode">
+          <i class="fa-solid fa-moon"></i>
+        </button>
+
+        <a href="/cart.html" id="cart-nav-btn" title="Shopping Cart">
+          <i class="fa-solid fa-bag-shopping"></i>
+          <span class="cart-icon-badge" id="cart-badge-count">0</span>
+        </a>
+
+        <a href="/profile.html" id="profile-nav-btn" class="active" title="User Profile">
+          <i class="fa-solid fa-circle-user"></i>
+        </a>
+
+        <a href="/admin.html" id="admin-nav-btn" class="hidden" title="Admin Dashboard">
+          <i class="fa-solid fa-screwdriver-wrench"></i>
+        </a>
+
+        <a href="/login.html" id="login-nav-btn" title="Sign In">
+          <i class="fa-solid fa-arrow-right-to-bracket"></i>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- User Dashboard Layout -->
+  <main class="container dashboard-layout">
+    <!-- Left Navigation Panel -->
+    <aside class="dashboard-nav glass">
+      <div style="text-align: center; margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--glass-border);">
+        <i class="fa-solid fa-circle-user" style="font-size: 4rem; color: var(--primary); margin-bottom: 0.8rem;"></i>
+        <h3 id="user-display-name">Guest Customer</h3>
+        <p id="user-display-role" style="font-size: 0.8rem; color: var(--text-muted); text-transform: uppercase; margin-top: 0.2rem;">Customer</p>
+      </div>
+
+      <div class="dash-nav-link active" id="btn-show-profile">
+        <i class="fa-solid fa-user-gear"></i> Account Settings
+      </div>
+      <div class="dash-nav-link" id="btn-show-orders">
+        <i class="fa-solid fa-receipt"></i> Order History
+      </div>
+      <div class="dash-nav-link" id="btn-logout-user" style="color: var(--danger); margin-top: 2rem; border-top: 1px solid var(--glass-border); padding-top: 1rem;">
+        <i class="fa-solid fa-power-off"></i> Sign Out
+      </div>
+    </aside>
+
+    <!-- Right Panels Container -->
+    <section class="dashboard-panels">
+      <!-- 1. Profile Settings Panel -->
+      <div class="dashboard-panel glass" id="panel-profile">
+        <h2>Account Profile</h2>
+        <form id="profile-update-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="prof-name">Full Name</label>
+              <input type="text" id="prof-name" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="prof-email">Email Address</label>
+              <input type="email" id="prof-email" class="form-control" required>
+            </div>
+            <div class="form-group">
+              <label for="prof-phone">Phone Number</label>
+              <input type="text" id="prof-phone" class="form-control">
+            </div>
+          </div>
+
+          <h3 style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 700;">Update Password (optional)</h3>
+          <div class="form-group">
+            <label for="prof-password">New Password (leave empty to keep current)</label>
+            <input type="password" id="prof-password" class="form-control" minlength="6" placeholder="Enter new password">
+          </div>
+
+          <h3 style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1.2rem; font-weight: 700;">Default Shipping Address</h3>
+          <div class="form-grid">
+            <div class="form-group full-width">
+              <label for="prof-street">Street Address</label>
+              <input type="text" id="prof-street" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="prof-city">City</label>
+              <input type="text" id="prof-city" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="prof-state">State / Province</label>
+              <input type="text" id="prof-state" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="prof-zip">Zip / Postal Code</label>
+              <input type="text" id="prof-zip" class="form-control">
+            </div>
+            <div class="form-group">
+              <label for="prof-country">Country</label>
+              <input type="text" id="prof-country" class="form-control">
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary" style="margin-top: 2rem;">
+            Save Account Changes <i class="fa-solid fa-floppy-disk"></i>
+          </button>
+        </form>
+      </div>
+
+      <!-- 2. Order History Panel -->
+      <div class="dashboard-panel glass hidden" id="panel-orders">
+        <h2>Order History</h2>
+        
+        <div class="table-container" id="orders-list-empty" style="display: none; text-align: center; padding: 3rem 0; color: var(--text-muted);">
+          <i class="fa-solid fa-receipt" style="font-size: 3rem; margin-bottom: 1rem;"></i>
+          <p>No orders placed yet. Head over to the store!</p>
+        </div>
+
+        <div class="table-container" id="orders-table-wrapper">
+          <table class="order-table">
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Purchase Date</th>
+                <th>Total Price</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="orders-list-tbody">
+              <!-- Loaded dynamically -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 3. Order Tracking Detail Panel (Overlay style within panels) -->
+      <div class="dashboard-panel glass hidden" id="panel-tracking">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+          <h2 id="tracking-title">Track Order</h2>
+          <button id="btn-back-to-orders" class="btn-secondary" style="padding: 0.5rem 1rem;">
+            <i class="fa-solid fa-arrow-left"></i> Back to History
+          </button>
+        </div>
+
+        <div style="padding: 1.5rem; border-radius: var(--border-radius-sm); background-color: var(--bg-tertiary); margin-bottom: 2rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div>
+            <span style="font-size: 0.9rem; color: var(--text-muted);">Order Number</span>
+            <div id="tracking-num" style="font-weight: 700; font-size: 1.1rem; margin-top: 0.2rem;">ORD-XXXXXX</div>
+          </div>
+          <div>
+            <span style="font-size: 0.9rem; color: var(--text-muted);">Payment Mode</span>
+            <div id="tracking-payment" style="font-weight: 700; font-size: 1.1rem; margin-top: 0.2rem;">Cash on Delivery</div>
+          </div>
+          <div>
+            <span style="font-size: 0.9rem; color: var(--text-muted);">Total Amount</span>
+            <div id="tracking-total" style="font-weight: 700; font-size: 1.1rem; margin-top: 0.2rem; color: var(--primary);">₹0.00</div>
+          </div>
+        </div>
+
+        <!-- Progress Tracker Bar -->
+        <div class="order-tracking">
+          <div class="tracking-step" id="step-pending">
+            <div class="tracking-dot"><i class="fa-solid fa-clock"></i></div>
+            <div class="tracking-label">Pending</div>
+          </div>
+          <div class="tracking-step" id="step-processing">
+            <div class="tracking-dot"><i class="fa-solid fa-gear"></i></div>
+            <div class="tracking-label">Processing</div>
+          </div>
+          <div class="tracking-step" id="step-shipped">
+            <div class="tracking-dot"><i class="fa-solid fa-truck"></i></div>
+            <div class="tracking-label">Shipped</div>
+          </div>
+          <div class="tracking-step" id="step-delivered">
+            <div class="tracking-dot"><i class="fa-solid fa-house-chimney"></i></div>
+            <div class="tracking-label">Delivered</div>
+          </div>
+        </div>
+
+        <!-- Shipment items details -->
+        <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">Items Detail</h3>
+        <div id="tracking-items-list" style="margin-bottom: 2rem;">
+          <!-- Loaded dynamically -->
+        </div>
+
+        <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 1rem;">Delivery Destination</h3>
+        <div id="tracking-address" style="line-height: 1.6; color: var(--text-secondary);">
+          <!-- Loaded dynamically -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <p>&copy; 2026 E-Shop Inc. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/main.js"></script>
+  <script src="/js/profile.js"></script>
+</body>
+</html>

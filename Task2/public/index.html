@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ConnectHub | Modern Social Network</title>
+  <!-- Google Fonts: Inter and Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheets -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Toast Notification Overlay -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- App Wrapper -->
+  <div id="app-wrapper" class="app-layout hidden">
+    <!-- Sticky Top Navbar -->
+    <header class="top-navbar">
+      <div class="nav-left">
+        <a href="#/" class="logo-link">
+          <span class="logo-text">ConnectHub</span>
+        </a>
+      </div>
+      
+      <div class="nav-center search-bar-container">
+        <form id="global-search-form" class="search-form">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="search-input" placeholder="Search users or posts..." autocomplete="off">
+        </form>
+      </div>
+
+      <div class="nav-right header-actions">
+        <button id="theme-toggle" class="icon-btn" title="Toggle Theme">
+          <i class="fa-solid fa-sun sun-icon"></i>
+          <i class="fa-solid fa-moon moon-icon"></i>
+        </button>
+        <div class="profile-preview-wrapper" id="profile-dropdown-trigger">
+          <img id="nav-user-avatar" src="" alt="Profile" class="avatar-sm fallback-avatar">
+          <span id="nav-user-name" class="nav-username">Username</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Shell: Sidebar & Main Page Content -->
+    <div class="main-shell">
+      <!-- Left Sidebar (Desktop) -->
+      <aside class="sidebar-nav">
+        <div class="sidebar-menu">
+          <a href="#/" class="nav-link active" data-route="feed">
+            <i class="fa-solid fa-house"></i>
+            <span>Home</span>
+          </a>
+          <a href="#/explore" class="nav-link" data-route="explore">
+            <i class="fa-solid fa-compass"></i>
+            <span>Explore</span>
+          </a>
+          <a href="#/notifications" class="nav-link notification-link" data-route="notifications">
+            <div class="icon-wrapper">
+              <i class="fa-solid fa-bell"></i>
+              <span id="nav-notification-badge" class="badge-counter hidden">0</span>
+            </div>
+            <span>Notifications</span>
+          </a>
+          <button class="nav-link btn-create-trigger" id="sidebar-btn-create">
+            <i class="fa-solid fa-square-plus"></i>
+            <span>Create Post</span>
+          </button>
+          <a href="#/profile" class="nav-link" id="nav-link-myprofile" data-route="profile">
+            <i class="fa-solid fa-user"></i>
+            <span>Profile</span>
+          </a>
+          <button id="sidebar-logout" class="nav-link logout-link">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+      </aside>
+
+      <!-- Main Content Page Router Target -->
+      <main id="app-content" class="app-main-content">
+        <!-- Rendered Pages (Home, Profile, Notifications, Explore etc) go here -->
+      </main>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar -->
+    <nav class="mobile-bottom-nav">
+      <a href="#/" class="mobile-nav-link active" data-route="feed">
+        <i class="fa-solid fa-house"></i>
+      </a>
+      <a href="#/explore" class="mobile-nav-link" data-route="explore">
+        <i class="fa-solid fa-compass"></i>
+      </a>
+      <button class="mobile-nav-link btn-create-trigger" id="mobile-btn-create">
+        <i class="fa-solid fa-square-plus"></i>
+      </button>
+      <a href="#/notifications" class="mobile-nav-link notification-link" data-route="notifications">
+        <div class="icon-wrapper">
+          <i class="fa-solid fa-bell"></i>
+          <span id="mobile-notification-badge" class="badge-counter hidden">0</span>
+        </div>
+      </a>
+      <a href="#/profile" class="mobile-nav-link" id="mobile-link-myprofile" data-route="profile">
+        <i class="fa-solid fa-user"></i>
+      </a>
+    </nav>
+  </div>
+
+  <!-- Guest Wrapper (Login / Register view) -->
+  <div id="guest-wrapper" class="guest-layout">
+    <div class="guest-card-container">
+      <!-- Loaded dynamically via router: Register or Login views -->
+      <div id="guest-content"></div>
+    </div>
+  </div>
+
+  <!-- Modals and Overlays -->
+  <!-- Create Post Modal -->
+  <div id="create-post-modal" class="modal-overlay hidden">
+    <div class="modal-card glassmorphism animate-pop">
+      <div class="modal-header">
+        <h3>Create a Post</h3>
+        <button class="close-modal-btn" id="close-create-post-btn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="create-post-form" enctype="multipart/form-data">
+        <div class="modal-body">
+          <textarea id="post-content-input" placeholder="What's on your mind?" rows="4"></textarea>
+          
+          <div class="image-upload-preview-container hidden" id="post-image-preview-box">
+            <img id="post-image-preview" src="" alt="Selected Image">
+            <button type="button" id="remove-post-image-btn" class="remove-img-btn"><i class="fa-solid fa-circle-xmark"></i></button>
+          </div>
+          
+          <div class="upload-control">
+            <label for="post-image-input" class="upload-label">
+              <i class="fa-regular fa-image"></i> Add Photo
+            </label>
+            <input type="file" id="post-image-input" name="postImage" accept="image/*" class="file-input-hidden">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-close-modal" id="cancel-create-post-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submit-post-btn">Post</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Edit Profile Modal -->
+  <div id="edit-profile-modal" class="modal-overlay hidden">
+    <div class="modal-card glassmorphism animate-pop">
+      <div class="modal-header">
+        <h3>Edit Profile</h3>
+        <button class="close-modal-btn" id="close-edit-profile-btn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="edit-profile-form">
+        <div class="modal-body">
+          <!-- Profile Pic Section -->
+          <div class="avatar-upload-section">
+            <div class="avatar-wrapper">
+              <img id="edit-avatar-preview" src="" alt="Profile Pic" class="avatar-lg fallback-avatar">
+              <label for="avatar-input" class="avatar-edit-badge">
+                <i class="fa-solid fa-camera"></i>
+              </label>
+              <input type="file" id="avatar-input" accept="image/*" class="file-input-hidden">
+            </div>
+            <p class="upload-hint">Click camera to upload a new profile picture</p>
+          </div>
+          
+          <!-- Details Fields -->
+          <div class="form-group">
+            <label for="edit-bio">Bio</label>
+            <textarea id="edit-bio" rows="3" placeholder="Tell us about yourself..."></textarea>
+          </div>
+          <div class="form-group">
+            <label for="edit-location">Location</label>
+            <input type="text" id="edit-location" placeholder="e.g. New York, USA">
+          </div>
+          <div class="form-group">
+            <label for="edit-website">Website</label>
+            <input type="url" id="edit-website" placeholder="e.g. https://yourportfolio.com">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary btn-close-modal" id="cancel-edit-profile-btn">Cancel</button>
+          <button type="submit" class="btn btn-primary" id="submit-profile-btn">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Likes Modal (Who liked this post) -->
+  <div id="likes-modal" class="modal-overlay hidden">
+    <div class="modal-card glassmorphism animate-pop">
+      <div class="modal-header">
+        <h3>Likes</h3>
+        <button class="close-modal-btn" id="close-likes-modal-btn"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <div class="modal-body scrollable-body">
+        <div id="likes-list-container" class="users-list">
+          <!-- Users who liked the post will be rendered here -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dynamic JS Application -->
+  <script src="app.js"></script>
+</body>
+</html>
